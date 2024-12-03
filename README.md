@@ -119,3 +119,41 @@ This are the command availables :
 if __name__ == "__main__":
     main()
 ```
+
+### Fourth step
+
+Add a function for write multiple task and a command for listing all the tasks.
+
+```
+def addTask(task):
+    try:
+        with open("tasks.json", "r") as infile:
+            tasks = json.load(infile)
+    except FileNotFoundError:
+        tasks = []
+
+    if len(tasks) == 0:
+        id = 1
+    else:
+        id = tasks[-1]["id"] + 1
+
+    tasks.append({"id": id, "task": task})
+
+    with open("tasks.json", "w") as outfile:
+        json.dump(tasks, outfile, indent=4)
+
+    print("# Task added successfully (ID:", id,")")
+
+def tasksList():
+    try:
+        with open("tasks.json", "r") as infile:
+            tasks = json.load(infile)
+            if tasks:
+                print("This if your task(s) :")
+                for elem in tasks:
+                    print("ID :", elem["id"], "/ task :", elem["task"])
+            else:
+                print("No tasks created yet.")
+    except FileNotFoundError:
+        print("No tasks created yet.")
+```
