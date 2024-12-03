@@ -157,3 +157,33 @@ def tasksList():
     except FileNotFoundError:
         print("No tasks created yet.")
 ```
+
+### Fifth step
+
+Add a function for deleting a task.
+
+```
+def deleteTask(idTask):
+    try:
+        idTask = int(idTask)
+        with open("tasks.json", "r") as infile:
+            tasks = json.load(infile)
+            if tasks:
+                found = False
+                for elem in tasks:
+                    if elem["id"] == idTask:
+                        found = True
+                        tasks = [task for task in tasks if task["id"] != idTask]
+                        with open("tasks.json", "w") as outfile:
+                            json.dump(tasks, outfile, indent=4)
+                        print(f"Task with ID {idTask} deleted successfully.")
+                        break
+                if not found:
+                    print("This ID does not exist.")
+            else:
+                print("Nothing to delete, there are no tasks yet.")
+    except FileNotFoundError:
+        print("Nothing to delete, there are no tasks yet.")
+    except ValueError:
+        print("Invalid ID. Please enter a valid number.")
+```
