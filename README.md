@@ -34,7 +34,30 @@ createdAt: The date and time when the task was created
 updatedAt: The date and time when the task was last updated
 Make sure to add these properties to the JSON file when adding a new task and update them when updating a task.
 
-# Solution
+# My solution
+
+## How to use
+
+Make sur you have python install on your machine.
+
+Download the code and run this command :
+
+```
+python3 task-tracker.py
+```
+
+The outpout will be :
+
+```
+Welcome to Task Tracker CLI !
+
+For beggining write the command add follow 
+by your task to add a new task it into our tool.
+
+Use the command "help" for the list of available commands.
+
+=>
+```
 
 ## First step
 
