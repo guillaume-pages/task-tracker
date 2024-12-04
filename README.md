@@ -36,20 +36,24 @@ Make sure to add these properties to the JSON file when adding a new task and up
 
 # Solution
 
-## First step 
+## First step
 
 Try to write on the terminal and read a value write by a user.
 
-Code :
+<details>
+    <summary>Code</summary>
 
-```
+
+```python
 print("Hello user, what is your name ?")
 
 name = input()
-print("Greatings", name, "!")
+print("Greetings", name, "!")
 ```
+</details>
 
-Outpout :
+<details>
+    <summary>Outpout</summary>
 
 ```
 python3 task-tracker.py
@@ -58,12 +62,16 @@ Guillaume
 Greatings Guillaume !
 ```
 
+</details>
+
 ## Second step 
 
 Take the user entry and put the value into a json file.
 
-Code :
-```
+<details>
+    <summary>Code</summary>
+
+```python
 import json
 
 print("# Adding a new task please")
@@ -79,20 +87,26 @@ json_object = json.dumps(dictionary, indent=4)
 with open("task.json", "w") as outfile:
     outfile.write(json_object)
 ```
+</details>
 
-Outpout :
+<details>
+    <summary>Outpout</summary>
 
-```
+```json
 {
     "task": "First task"
 }
 ```
+</details>
 
-### Third step
+## Third step
 
 Create a command line application that will wait for instructions.
 
-```
+<details>
+    <summary>Code</summary>
+
+```python
 def main():
     print("Welcome to Task Tracker CLI !\n")
     print("""For beggining write the command add follow 
@@ -140,12 +154,32 @@ This are the command availables :
 if __name__ == "__main__":
     main()
 ```
+</details>
 
-### Fourth step
+<details>
+    <summary>Outpout</summary>
+
+```
+python3 task-tracker.py
+Welcome to Task Tracker CLI !
+
+For beggining write the command add follow 
+by your task to add a new task it into our tool.
+
+Use the command "help" for the list of available commands.
+
+=> 
+```
+</details>
+
+## Fourth step
 
 Add a function for write multiple task and a command for listing all the tasks.
 
-```
+<details>
+    <summary>Code</summary>
+
+```python
 def addTask(task):
     try:
         with open("tasks.json", "r") as infile:
@@ -178,12 +212,16 @@ def tasksList():
     except FileNotFoundError:
         print("No tasks created yet.")
 ```
+</details>
 
-### Fifth step
+## Fifth step
 
 Add a function for deleting a task.
 
-```
+<details>
+    <summary>Code</summary>
+
+```python
 def deleteTask(idTask):
     try:
         idTask = int(idTask)
@@ -208,12 +246,34 @@ def deleteTask(idTask):
     except ValueError:
         print("Invalid ID. Please enter a valid number.")
 ```
+</details>
 
-### Sixth step
+<details>
+    <summary>Outpout</summary>
+
+```
+python3 task-tracker.py
+Welcome to Task Tracker CLI !
+
+For beggining write the command add follow 
+by your task to add a new task it into our tool.
+
+Use the command "help" for the list of available commands.
+
+=> delete 4
+Task with ID 4 deleted successfully.
+=> 
+```
+</details>
+
+## Sixth step
 
 Adding an update task function.
 
-```
+<details>
+    <summary>Code</summary>
+
+```python
 def updateTask(idTask, updatedTask):
     idTask = int(idTask)
     newTask = updatedTask
@@ -242,3 +302,101 @@ def updateTask(idTask, updatedTask):
     except ValueError:
         print("Invalid ID. Please enter a valid number.")
 ```
+</details>
+
+<details>
+    <summary>Outpout</summary>
+
+```
+=> list
+This if your task(s) :
+ID : 1 / task : example task / status : done
+=> update 1 Task updated
+Task with ID 1 updated successfully.
+=> list
+This if your task(s) :
+ID : 1 / task : Task updated / status : done
+=>
+```
+</details>
+
+## Seventh step
+
+Add the option for the command list, the options are todo, in-progress and done.
+
+<details>
+    <summary>Code</summary>
+
+```python
+def taskListWithOption(*arg):
+    status = arg[0]
+
+    try:
+        if status == "todo":
+            with open("tasks.json", "r") as infile:
+                tasks = json.load(infile)
+                if tasks:
+                    print("This are the task with a todo status :")
+                    for task in tasks:
+                        if task["status"] == "todo":
+                            print("ID :", task["id"], "/ task :", task["task"], "/ status :", task["status"])
+        elif status == "done":
+            with open("tasks.json", "r") as infile:
+                tasks = json.load(infile)
+                if tasks:
+                    print("This are the task with a done status :")
+                    for task in tasks:
+                        if task["status"] == "done":
+                            print("ID :", task["id"], "/ task :", task["task"], "/ status :", task["status"])
+        elif status == "in-progress":
+            with open("tasks.json", "r") as infile:
+                tasks = json.load(infile)
+                if tasks:
+                    print("This are the task with a in-progress status :")
+                    for task in tasks:
+                        if task["status"] == "in-progress":
+                            print("ID :", task["id"], "/ task :", task["task"], "/ status :", task["status"])
+        else:
+            print("This command option is not available")
+    except FileNotFoundError:
+        print("No tasks created yet")
+```
+</details>
+
+## Eighth step
+
+Add a function for update the status of a specific task
+
+<details>
+    <summary>Code</summary>
+
+```python
+def updateTaskStatus(status, idTask):
+    if not isinstance(idTask, int):
+        print("Error: you must enter a valid number for the ID task.")
+        return
+
+    try:
+        with open("tasks.json", "r") as infile:
+            tasks = json.load(infile)
+    except FileNotFoundError:
+        print("Nothing to update, there are no tasks yet.")
+        return
+
+    task_found = False
+    for task in tasks:
+        if task["id"] == idTask:
+            task["status"] = status
+            task_found = True
+            break
+
+    if not task_found:
+        print(f"Error: Task with ID {idTask} not found.")
+        return
+
+    with open("tasks.json", "w") as outfile:
+        json.dump(tasks, outfile, indent=4)
+
+    print(f"Task with ID {idTask} updated successfully to status '{status}'.")
+```
+</details>
