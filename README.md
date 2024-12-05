@@ -48,7 +48,7 @@ Download the code and run this command :
 python3 task-tracker.py
 ```
 
-The outpout will be :
+The output will be :
 
 ```
 Welcome to Task Tracker CLI !
@@ -78,7 +78,7 @@ print("Greetings", name, "!")
 </details>
 
 <details>
-    <summary>Outpout</summary>
+    <summary>output</summary>
 
 ```
 python3 task-tracker.py
@@ -115,7 +115,7 @@ with open("task.json", "w") as outfile:
 </details>
 
 <details>
-    <summary>Outpout</summary>
+    <summary>output</summary>
 
 ```json
 {
@@ -182,7 +182,7 @@ if __name__ == "__main__":
 </details>
 
 <details>
-    <summary>Outpout</summary>
+    <summary>output</summary>
 
 ```
 python3 task-tracker.py
@@ -274,7 +274,7 @@ def deleteTask(idTask):
 </details>
 
 <details>
-    <summary>Outpout</summary>
+    <summary>output</summary>
 
 ```
 python3 task-tracker.py
@@ -330,7 +330,7 @@ def updateTask(idTask, updatedTask):
 </details>
 
 <details>
-    <summary>Outpout</summary>
+    <summary>output</summary>
 
 ```
 => list
